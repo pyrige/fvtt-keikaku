@@ -5,7 +5,10 @@
   "description": "This module lets each user manage a simple to-do list.",
   "version": "0.1.0",
   "author": "Kevin Perry",
+
   "url": "https://github.com/pyrige/fvtt-keikaku",
+  "manifest": "https://github.com/pyrige/fvtt-keikaku/releases/download/latest/module.json",
+  "download": "https://github.com/pyrige/fvtt-keikaku/releases/download/latest/module.zip",
 
   "library": false,
   "minimumCoreVersion": "0.5.0",
