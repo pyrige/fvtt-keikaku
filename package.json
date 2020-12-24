@@ -1,0 +1,16 @@
+{
+  "name": "fvtt-keikaku",
+  "version": "0.1.0",
+  "description": "Simple to-do list module for Foundry VTT",
+  "repository": "https://github.com/pyrige/fvtt-keikaku",
+  "author": "Kevin Perry",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "eslint": "^7.16.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-promise": "^4.2.1",
+    "typescript": "^4.1.3"
+  }
+}
