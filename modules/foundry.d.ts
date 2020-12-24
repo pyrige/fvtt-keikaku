@@ -1,4 +1,17 @@
 /**
+ * A helper class which assists with localization and string translation
+ */
+declare class Localization {
+  /**
+   * Localize a string by drawing a translation from the available translations dictionary, if available
+   * If a translation is not available, the original string is returned
+   * @param stringId The string ID to translate
+   * @returns        The translated string
+   */
+  localize(stringId: string): string;
+}
+
+/**
  * The User entity
  * Each player who connects to a Foundry Virtual Tabletop session is a User.
  * Users represent human beings (or possibly programmatic players) and are the cornerstone of identity in Foundry VTT.
@@ -41,6 +54,7 @@ declare class User {
 
 declare class Game {
   user: User;
+  i18n: Localization;
 }
 
 declare var game: Game;

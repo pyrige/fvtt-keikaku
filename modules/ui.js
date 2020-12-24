@@ -1,5 +1,5 @@
 /* global Sortable, jQuery */
-/* global loadTemplates, mergeObject, Application, FormApplication */
+/* global game, loadTemplates, mergeObject, Application, FormApplication */
 
 import { Task, TodoList } from './todo.js';
 
@@ -9,9 +9,9 @@ import { Task, TodoList } from './todo.js';
  */
 async function preloadTemplates() {
   const templates = [
-    'modules/keikaku/templates/todo-list.hbs',
-    'modules/keikaku/templates/todo-list-item.hbs',
-    'modules/keikaku/templates/todo-item-form.hbs',
+    'modules/fvtt-keikaku/templates/todo-list.hbs',
+    'modules/fvtt-keikaku/templates/todo-list-item.hbs',
+    'modules/fvtt-keikaku/templates/todo-item-form.hbs',
   ];
 
   return loadTemplates(templates);
@@ -21,11 +21,12 @@ class TodoListWindow extends Application {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       id: 'keikaku-todo-list',
-      template: 'modules/keikaku/templates/todo-list.hbs',
-      width: 500,
+      template: 'modules/fvtt-keikaku/templates/todo-list.hbs',
+      width: 400,
+      height: 300,
       minimizable: true,
       resizable: true,
-      title: 'To-Do List',
+      title: game.i18n.localize('keikaku.todolistwindow.title'),
     })
   }
 
@@ -75,16 +76,15 @@ class TodoListWindow extends Application {
   }
 }
 
-const todoListWindow = new TodoListWindow();
-
 class TaskForm extends FormApplication {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       id: 'keikaku-todo-item-form',
-      template: 'modules/keikaku/templates/todo-item-form.hbs',
+      template: 'modules/fvtt-keikaku/templates/todo-item-form.hbs',
       width: 400,
       minimizable: false,
-      closeOnSubmit: true
+      closeOnSubmit: true,
+      title: game.i18n.localize('keikaku.taskform.title'),
     })
   }
 
@@ -128,8 +128,9 @@ class TaskForm extends FormApplication {
 export async function initUiComponents(html) {
   await preloadTemplates();
 
-  const todoListButton = jQuery('<button><i class="fas fa-tasks"></i>To-Do</button>');
+  window.todoListWindow = new TodoListWindow();
 
+  const todoListButton = jQuery(`<button><i class="fas fa-tasks"></i>${game.i18n.localize('keikaku.journalbutton')}</button>`);
   todoListButton.on('click', () => todoListWindow.render(true));
 
   html.find('.directory-header .header-actions').append(todoListButton);

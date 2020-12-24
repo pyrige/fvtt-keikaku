@@ -1,8 +1,8 @@
-<form autocomplete="off" {{#if index}} data-index="{{ index }}" {{/if}}>
+<form autocomplete="off">
   <section class="task">
     <div class="form-group">
       <div class="form-fields">
-        <label for="description">Description</label>
+        <label for="description">{{ localize 'keikaku.taskform.description' }}</label>
         <input type="text" id="description" name="description" value="{{ description }}" data-dtype="String"
           required="true">
       </div>
@@ -13,13 +13,13 @@
 
   <hr>
 
-  <footer class="sheet-footer flexrow">
+  <footer>
     <button type="submit" name="submit">
       <i class="far fa-save"></i>
-      {{#if index}}
-      Update Task
+      {{#if index includeZero=true}}
+      {{ localize 'keikaku.taskform.updatetask' }}
       {{else}}
-      Create Task
+      {{ localize 'keikaku.taskform.createtask' }}
       {{/if}}
     </button>
   </footer>

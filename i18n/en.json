@@ -1,0 +1,16 @@
+{
+  "keikaku.initializing": "Initializing the to-do list manager",
+  "keikaku.journalbutton": "To-Do",
+
+  "keikaku.taskform.title": "Edit Task",
+  "keikaku.taskform.createtask": "Create Task",
+  "keikaku.taskform.description": "Description",
+  "keikaku.taskform.updatetask": "Update Task",
+
+  "keikaku.todolistwindow.title": "To-Do List",
+  "keikaku.todolistwindow.completetask": "Mark Complete",
+  "keikaku.todolistwindow.deletetask": "Delete Task",
+  "keikaku.todolistwindow.edittask": "Edit Task",
+  "keikaku.todolistwindow.incompletetask": "Mark Incomplete",
+  "keikaku.todolistwindow.newtask": "New Task"
+}

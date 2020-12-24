@@ -3,7 +3,7 @@
   "name": "fvtt-keikaku",
   "title": "Keikaku - Simple to-do list module for Foundry VTT",
   "description": "This module lets each user manage a simple to-do list.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Kevin Perry",
 
   "url": "https://github.com/pyrige/fvtt-keikaku",
@@ -16,11 +16,20 @@
 
   "esmodules": [ "modules/keikaku.js" ],
   "styles": [ "styles/keikaku.css" ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "i18n/en.json"
+    }
+  ],
   "includes": [
     "modules/keikaku.js",
     "modules/logger.js",
     "modules/todo.js",
     "modules/ui.js",
+
+    "i18n/en.json",
 
     "styles/keikaku.css",
 

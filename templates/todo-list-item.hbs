@@ -1,23 +1,27 @@
 <li>
   <div class="flexrow">
     {{#if done}}
-    <a class="todo-control" data-index="{{@index}}" data-action="todo-toggle" title="Mark Incomplete">
+    <a class="todo-control" data-index="{{ @index }}" data-action="todo-toggle"
+      title="{{ localize 'keikaku.todolistwindow.incompletetask' }}">
       <i class="far fa-lg fa-check-square"></i>
     </a>
     {{else}}
-    <a class="todo-control" data-index="{{@index}}" data-action="todo-toggle" title="Mark Complete">
+    <a class="todo-control" data-index="{{ @index }}" data-action="todo-toggle"
+      title="{{ localize  'keikaku.todolistwindow.completetask' }}">
       <i class="far fa-lg fa-square"></i>
     </a>
     {{/if}}
 
     <p class="todo-description {{#if done}}todo-done{{/if}}">
-      {{description}}
+      {{ description }}
     </p>
 
-    <a class="todo-control" data-index="{{@index}}" data-action="todo-edit" title="Edit Item">
+    <a class="todo-control" data-index="{{ @index }}" data-action="todo-edit"
+      title="{{ localize 'keikaku.todolistwindow.edittask' }}">
       <i class="far fa-edit"></i>
     </a>
-    <a class="todo-control" data-index="{{@index}}" data-action="todo-delete" title="Delete Item">
+    <a class="todo-control" data-index="{{ @index }}" data-action="todo-delete"
+      title="{{ localize 'keikaku.todolistwindow.deletetask' }}">
       <i class="far fa-trash-alt"></i>
     </a>
   </div>
