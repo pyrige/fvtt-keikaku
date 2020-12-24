@@ -1,0 +1,24 @@
+<li>
+  <div class="flexrow">
+    {{#if done}}
+    <a class="todo-control" data-index="{{@index}}" data-action="todo-toggle" title="Mark Incomplete">
+      <i class="far fa-lg fa-check-square"></i>
+    </a>
+    {{else}}
+    <a class="todo-control" data-index="{{@index}}" data-action="todo-toggle" title="Mark Complete">
+      <i class="far fa-lg fa-square"></i>
+    </a>
+    {{/if}}
+
+    <p class="todo-description {{#if done}}todo-done{{/if}}">
+      {{description}}
+    </p>
+
+    <a class="todo-control" data-index="{{@index}}" data-action="todo-edit" title="Edit Item">
+      <i class="far fa-edit"></i>
+    </a>
+    <a class="todo-control" data-index="{{@index}}" data-action="todo-delete" title="Delete Item">
+      <i class="far fa-trash-alt"></i>
+    </a>
+  </div>
+</li>

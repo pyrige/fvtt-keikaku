@@ -1,0 +1,30 @@
+#keikaku-todo-list > li:not(:last-child):after {
+  content: "";
+  display: block;
+  height: 1px;
+  width: 95%;
+  margin: 5px;
+  border: none;
+  border-top: 1px solid #b5b3a4;
+  border-bottom: 1px solid #f0f0e0;
+}
+
+#keikaku-todo-list .flexrow {
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+#keikaku-todo-list .todo-control {
+  flex: 0;
+  margin: 5px;
+}
+
+#keikaku-todo-list .todo-description {
+  text-align: justify;
+  flex: auto;
+  margin-right: 10px;
+}
+
+#keikaku-todo-list .todo-description.todo-done {
+  text-decoration: line-through;
+}

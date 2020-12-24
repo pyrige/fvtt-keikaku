@@ -1,0 +1,26 @@
+<form autocomplete="off" {{#if index}} data-index="{{ index }}" {{/if}}>
+  <section class="task">
+    <div class="form-group">
+      <div class="form-fields">
+        <label for="description">Description</label>
+        <input type="text" id="description" name="description" value="{{ description }}" data-dtype="String"
+          required="true">
+      </div>
+    </div>
+
+    <input type="hidden" name="index" value="{{ index }}" />
+  </section>
+
+  <hr>
+
+  <footer class="sheet-footer flexrow">
+    <button type="submit" name="submit">
+      <i class="far fa-save"></i>
+      {{#if index}}
+      Update Task
+      {{else}}
+      Create Task
+      {{/if}}
+    </button>
+  </footer>
+</form>
