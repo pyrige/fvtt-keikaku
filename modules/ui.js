@@ -1,7 +1,7 @@
 /* global Sortable, jQuery */
 /* global game, loadTemplates, mergeObject, Application, FormApplication */
 
-import { Task, TodoList } from './todo.js';
+import { Task, TodoList } from "./todo.js";
 
 /**
  * Parse handlebar templates included with keikaku.
@@ -9,9 +9,9 @@ import { Task, TodoList } from './todo.js';
  */
 async function preloadTemplates() {
   const templates = [
-    'modules/fvtt-keikaku/templates/todo-list.hbs',
-    'modules/fvtt-keikaku/templates/todo-list-item.hbs',
-    'modules/fvtt-keikaku/templates/todo-item-form.hbs',
+    "modules/fvtt-keikaku/templates/todo-list.hbs",
+    "modules/fvtt-keikaku/templates/todo-list-item.hbs",
+    "modules/fvtt-keikaku/templates/todo-item-form.hbs",
   ];
 
   return loadTemplates(templates);
@@ -20,53 +20,56 @@ async function preloadTemplates() {
 class TodoListWindow extends Application {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      id: 'keikaku-todo-list',
-      template: 'modules/fvtt-keikaku/templates/todo-list.hbs',
+      id: "keikaku-todo-list",
+      template: "modules/fvtt-keikaku/templates/todo-list.hbs",
       width: 400,
       height: 300,
       minimizable: true,
       resizable: true,
-      title: game.i18n.localize('keikaku.todolistwindow.title'),
-    })
+      title: game.i18n.localize("keikaku.todolistwindow.title"),
+    });
   }
 
   activateListeners(html) {
     super.activateListeners(html);
 
-    Sortable.create(html.get(0), {
-      onEnd: async (evt) => {
-        if (evt.oldIndex == evt.newIndex) return;
+    const listEl = html.find("#keikaku-todo-list").get(0);
+    if (listEl) {
+      Sortable.create(listEl, {
+        onEnd: async (evt) => {
+          if (evt.oldIndex == evt.newIndex) return;
 
-        const list = todoListWindow.getData();
-        await list.moveTask(evt.oldIndex, evt.newIndex);
-        todoListWindow.render(true);
-      }
-    });
+          const list = window.todoListWindow.getData();
+          await list.moveTask(evt.oldIndex, evt.newIndex);
+          window.todoListWindow.render(true);
+        }
+      });
+    }
 
-    html.on('click', 'a.todo-control', async function () {
-      const index = jQuery(this).data('index');
-      const action = jQuery(this).data('action');
+    html.on("click", "a.todo-control", async function () {
+      const index = jQuery(this).data("index");
+      const action = jQuery(this).data("action");
 
-      const list = todoListWindow.getData();
+      const list = window.todoListWindow.getData();
 
       switch (action) {
-        case 'todo-toggle':
+        case "todo-toggle":
           await list.toggleTask(index);
           break;
-        case 'todo-delete':
+        case "todo-delete":
           await list.deleteTask(index);
           break;
-        case 'todo-edit':
+        case "todo-edit":
           new TaskForm(list.tasks[index], index).render(true);
           break;
         default:
           return;
       }
 
-      todoListWindow.render(true);
+      window.todoListWindow.render(true);
     });
 
-    html.on('click', 'button.todo-new', async function () {
+    html.on("click", "button.todo-new", async function () {
       new TaskForm().render(true);
     });
   }
@@ -79,13 +82,13 @@ class TodoListWindow extends Application {
 class TaskForm extends FormApplication {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      id: 'keikaku-todo-item-form',
-      template: 'modules/fvtt-keikaku/templates/todo-item-form.hbs',
+      id: "keikaku-todo-item-form",
+      template: "modules/fvtt-keikaku/templates/todo-item-form.hbs",
       width: 400,
       minimizable: false,
       closeOnSubmit: true,
-      title: game.i18n.localize('keikaku.taskform.title'),
-    })
+      title: game.i18n.localize("keikaku.taskform.title"),
+    });
   }
 
   /**
@@ -100,7 +103,7 @@ class TaskForm extends FormApplication {
   }
 
   activateListeners(html) {
-    super.activateListeners(html)
+    super.activateListeners(html);
   }
 
   getData() {
@@ -114,7 +117,7 @@ class TaskForm extends FormApplication {
     else
       await list.appendTask(data.description);
 
-    todoListWindow.render(true);
+    window.todoListWindow.render(true);
   }
 }
 
@@ -130,8 +133,8 @@ export async function initUiComponents(html) {
 
   window.todoListWindow = new TodoListWindow();
 
-  const todoListButton = jQuery(`<button><i class="fas fa-tasks"></i>${game.i18n.localize('keikaku.journalbutton')}</button>`);
-  todoListButton.on('click', () => todoListWindow.render(true));
+  const todoListButton = jQuery(`<button><i class="fas fa-tasks"></i>${game.i18n.localize("keikaku.journalbutton")}</button>`);
+  todoListButton.on("click", () => window.todoListWindow.render(true));
 
-  html.find('.directory-header .header-actions').append(todoListButton);
+  html.find(".directory-header .header-actions").append(todoListButton);
 }

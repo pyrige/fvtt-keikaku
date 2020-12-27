@@ -2,7 +2,7 @@
   <section class="task">
     <div class="form-group">
       <div class="form-fields">
-        <label for="description">{{ localize 'keikaku.taskform.description' }}</label>
+        <label for="description">{{ localize "keikaku.taskform.description" }}</label>
         <input type="text" id="description" name="description" value="{{ description }}" data-dtype="String"
           required="true">
       </div>
@@ -17,9 +17,9 @@
     <button type="submit" name="submit">
       <i class="far fa-save"></i>
       {{#if index includeZero=true}}
-      {{ localize 'keikaku.taskform.updatetask' }}
+      {{ localize "keikaku.taskform.updatetask" }}
       {{else}}
-      {{ localize 'keikaku.taskform.createtask' }}
+      {{ localize "keikaku.taskform.createtask" }}
       {{/if}}
     </button>
   </footer>

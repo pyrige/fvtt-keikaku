@@ -1,9 +1,9 @@
 {
   "manifestPlusVersion": "1.0.0",
   "name": "fvtt-keikaku",
-  "title": "Keikaku - Simple to-do list module for Foundry VTT",
-  "description": "This module lets each user manage a simple to-do list.",
-  "version": "0.1.1",
+  "title": "Keikaku - To-Do List",
+  "description": "Simple to-do list module for Foundry VTT. Every user may manage their own to-do list, add arbitrary tasks, and mark them as completed.",
+  "version": "0.1.2",
   "author": "Kevin Perry",
 
   "url": "https://github.com/pyrige/fvtt-keikaku",

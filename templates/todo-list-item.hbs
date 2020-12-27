@@ -1,13 +1,13 @@
 <li>
   <div class="flexrow">
     {{#if done}}
-    <a class="todo-control" data-index="{{ @index }}" data-action="todo-toggle"
-      title="{{ localize 'keikaku.todolistwindow.incompletetask' }}">
+    <a class="todo-control" data-index="{{ @index }}" data-action="todo-toggle" title="{{ localize "
+      keikaku.todolistwindow.incompletetask" }}">
       <i class="far fa-lg fa-check-square"></i>
     </a>
     {{else}}
-    <a class="todo-control" data-index="{{ @index }}" data-action="todo-toggle"
-      title="{{ localize  'keikaku.todolistwindow.completetask' }}">
+    <a class="todo-control" data-index="{{ @index }}" data-action="todo-toggle" title="{{ localize "
+      keikaku.todolistwindow.completetask" }}">
       <i class="far fa-lg fa-square"></i>
     </a>
     {{/if}}
@@ -16,12 +16,12 @@
       {{ description }}
     </p>
 
-    <a class="todo-control" data-index="{{ @index }}" data-action="todo-edit"
-      title="{{ localize 'keikaku.todolistwindow.edittask' }}">
+    <a class="todo-control" data-index="{{ @index }}" data-action="todo-edit" title="{{ localize "
+      keikaku.todolistwindow.edittask" }}">
       <i class="far fa-edit"></i>
     </a>
-    <a class="todo-control" data-index="{{ @index }}" data-action="todo-delete"
-      title="{{ localize 'keikaku.todolistwindow.deletetask' }}">
+    <a class="todo-control" data-index="{{ @index }}" data-action="todo-delete" title="{{ localize "
+      keikaku.todolistwindow.deletetask" }}">
       <i class="far fa-trash-alt"></i>
     </a>
   </div>

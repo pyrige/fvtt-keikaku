@@ -6,7 +6,7 @@ export class Task {
    * @param {string} description is the task's description.
    * @param {boolean} done is the task's completion state.
    **/
-  constructor(description = '', done = false) {
+  constructor(description = "", done = false) {
     /** The task's description. **/
     this.description = description;
     /** The task's state of completion. **/
@@ -28,7 +28,7 @@ export class TodoList {
    * @return {TodoList} the to-do list read from user data
    **/
   static load() {
-    const tasks = game.user.getFlag('fvtt-keikaku', 'tasks');
+    const tasks = game.user.getFlag("fvtt-keikaku", "tasks");
 
     return new TodoList(tasks ? JSON.parse(tasks) : undefined);
   }
@@ -36,7 +36,7 @@ export class TodoList {
   /** Store the current user's to-do list in the database. **/
   async store() {
     const tasks = JSON.stringify(this.tasks);
-    await game.user.setFlag('fvtt-keikaku', 'tasks', tasks);
+    await game.user.setFlag("fvtt-keikaku", "tasks", tasks);
   }
 
   /**
