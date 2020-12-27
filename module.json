@@ -9,6 +9,12 @@
   "url": "https://github.com/pyrige/fvtt-keikaku",
   "manifest": "https://github.com/pyrige/fvtt-keikaku/releases/download/latest/module.json",
   "download": "https://github.com/pyrige/fvtt-keikaku/releases/download/latest/module.zip",
+  "media": [
+    {
+      "type": "screenshot",
+      "url": "https://ghcdn.rawgit.org/pyrige/fvtt-keikaku/main/screenshot.png"
+    }
+  ],
 
   "library": false,
   "minimumCoreVersion": "0.5.0",
