@@ -12,5 +12,6 @@
   "keikaku.todolistwindow.deletetask": "Delete Task",
   "keikaku.todolistwindow.edittask": "Edit Task",
   "keikaku.todolistwindow.incompletetask": "Mark Incomplete",
-  "keikaku.todolistwindow.newtask": "New Task"
+  "keikaku.todolistwindow.newtask": "New Task",
+  "keikaku.todolistwindow.placeholder": "There's nothing for you to do at the moment. Add a task to get started."
 }
