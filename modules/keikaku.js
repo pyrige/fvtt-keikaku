@@ -18,6 +18,6 @@ Hooks.once("ready", async () => {
   logger.info(banner);
 });
 
-Hooks.once("renderJournalDirectory", async (_app, html, _data) => {
+Hooks.on("renderJournalDirectory", async (_app, html, _data) => {
   await initUiComponents(html);
 });
