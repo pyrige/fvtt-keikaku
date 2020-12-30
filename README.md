@@ -16,7 +16,7 @@ The module adds a button to open the to-do list at the top of the _Journal Direc
 
 ## Screenshot
 
-![To-do list with four of tasks](https://ghcdn.rawgit.org/pyrige/fvtt-keikaku/main/screenshot.png)
+![To-do list with four of tasks](https://ghcdn.rawgit.org/pyrige/fvtt-keikaku/e9e66b943bb2baed1fb70e239da3000500fdfd4f/screenshot.png)
 
 ## License
 
