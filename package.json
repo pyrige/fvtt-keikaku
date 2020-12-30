@@ -6,7 +6,12 @@
   "author": "Kevin Perry",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "lint": "eslint modules/",
+    "tsc": "tsc"
+  },
   "devDependencies": {
+    "@types/jquery": "^3.5.5",
     "eslint": "^7.16.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",

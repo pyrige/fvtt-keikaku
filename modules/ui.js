@@ -1,11 +1,11 @@
-/* global Sortable, jQuery */
+/* global jQuery, Sortable */
 /* global game, loadTemplates, mergeObject, Application, FormApplication */
 
 import { Task, TodoList } from "./todo.js";
 
 /**
  * Parse handlebar templates included with keikaku.
- * @returns {Promise<Array<(data: object) => string>} an array of functions used for rendering the templates
+ * @returns {Promise<Array<Function>>} an array of functions used for rendering the templates
  */
 async function preloadTemplates() {
   const templates = [
@@ -17,7 +17,7 @@ async function preloadTemplates() {
   return loadTemplates(templates);
 }
 
-class TodoListWindow extends Application {
+export class TodoListWindow extends Application {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       id: "keikaku-todo-list",
@@ -70,10 +70,13 @@ class TodoListWindow extends Application {
     });
 
     html.on("click", "button.todo-new", async function () {
-      new TaskForm().render(true);
+      new TaskForm(undefined, undefined).render(true);
     });
   }
 
+  /**
+   * @returns {TodoList}
+   */
   getData() {
     return TodoList.load();
   }
@@ -92,7 +95,7 @@ class TaskForm extends FormApplication {
   }
 
   /**
-   * @param {Task?} task is the (optional) task to edit
+   * @param {Task} task is the (optional) task to edit
    * @param {number?} index is the (optional) index in the to-do list
    **/
   constructor(task, index) {
@@ -102,14 +105,12 @@ class TaskForm extends FormApplication {
     this.index = index;
   }
 
-  activateListeners(html) {
-    super.activateListeners(html);
-  }
-
+  /** @override */
   getData() {
     return { index: this.index, description: this.task.description };
   }
 
+  /** @override */
   async _updateObject(_event, data) {
     const list = TodoList.load();
     if (data.index)
