@@ -10,7 +10,7 @@
   },
   "rules": {
     "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-    "quotes": ["error", "double"],
+    "quotes": ["error", "double", {"avoidEscape": true}],
     "semi": ["error", "always"]
   }
 }

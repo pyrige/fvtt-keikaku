@@ -2,6 +2,17 @@
   "keikaku.initializing": "Initializing the to-do list manager",
   "keikaku.journalbutton": "To-Do",
 
+  "keikaku.reminder.title": "To-Do List Reminder",
+  "keikaku.reminder.complete": "All your tasks are complete. Do you want to add a new one?",
+  "keikaku.reminder.incomplete": "There are unfinished tasks in your to-do list.",
+  "keikaku.reminder.button": "Open To-Do List",
+
+  "keikaku.settings.name": "Remind Players",
+  "keikaku.settings.hint": "During load a dialog pops up to remind players of the to-do list",
+  "keikaku.settings.choice.never": "Never",
+  "keikaku.settings.choice.incomplete": "Unfinished Tasks",
+  "keikaku.settings.choice.always": "Always",
+
   "keikaku.taskform.title": "Edit Task",
   "keikaku.taskform.createtask": "Create Task",
   "keikaku.taskform.description": "Description",

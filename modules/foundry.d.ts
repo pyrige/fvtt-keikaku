@@ -85,6 +85,25 @@ declare class FormApplication extends Application {
   _updateObject(event: Event, formData: Object): Promise<void>;
 }
 
+declare class Dialog extends Application {
+  /**
+   * Create a dialog window displaying a title, a message, and a set of buttons which trigger callback functions.
+   * @param {Object} data               An object of dialog data which configures how the modal window is rendered
+   * @param {string} data.title         The window title
+   * @param {string} data.content       HTML content
+   * @param {Function} [data.render]    A callback function invoked when the dialog is rendered
+   * @param {Function} [data.close]     Common callback operations to perform when the dialog is closed
+   * @param {Object<string, DialogButton>} data.buttons The buttons which are displayed as action choices for the dialog
+   *
+   * @param {Object} options            Dialog rendering options, see :class:`Application`
+   * @param {string} options.default    The name of the default button which should be triggered on Enter
+   * @param {boolean} options.jQuery    Whether to provide jQuery objects to callback functions (if true) or plain
+   *                                    HTMLElement instances (if false). This is currently true by default but in the
+   *                                    future will become false by default.
+   */
+  constructor(data: Object, options?: Object);
+}
+
 /**
  * A helper class which assists with localization and string translation
  */
@@ -160,8 +179,28 @@ declare class User {
   setFlag(scope: string, key: string, value: any): Promise<User>;
 }
 
+declare class ClientSettings {
+  /**
+   * Register a new game setting under this setting scope
+   *
+   * @param module   The namespace under which the setting is registered
+   * @param key      The key name for the setting under the namespace module
+   * @param data     Configuration for setting data
+   */
+  register(module: string, key: string, data: Object): void;
+
+  /**
+   * Get the value of a game setting for a certain module and setting key
+   *
+   * @param module   The module namespace under which the setting is registered
+   * @param key      The setting key to retrieve
+   */
+  get(module: string, key: string): any;
+}
+
 declare class Game {
   user: User;
+  settings: ClientSettings;
   i18n: Localization;
 }
 

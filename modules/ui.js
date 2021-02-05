@@ -1,5 +1,5 @@
 /* global jQuery, Sortable */
-/* global game, loadTemplates, mergeObject, Application, FormApplication */
+/* global game, loadTemplates, mergeObject, Application, FormApplication, Dialog */
 
 import { Task, TodoList } from "./todo.js";
 
@@ -42,7 +42,7 @@ export class TodoListWindow extends Application {
           const list = window.todoListWindow.getData();
           await list.moveTask(evt.oldIndex, evt.newIndex);
           window.todoListWindow.render(true);
-        }
+        },
       });
     }
 
@@ -113,13 +113,61 @@ class TaskForm extends FormApplication {
   /** @override */
   async _updateObject(_event, data) {
     const list = TodoList.load();
-    if (data.index)
-      await list.updateTask(data.index, data.description);
-    else
-      await list.appendTask(data.description);
+    if (data.index) await list.updateTask(data.index, data.description);
+    else await list.appendTask(data.description);
 
     window.todoListWindow.render(true);
   }
+}
+
+/**
+ * Setup the to-do list window. Adds a button to the journal directory.
+ *
+ * @param {JQuery} html is the rendered HTML provided by jQuery
+ **/
+function setupTodoListWindow(html) {
+  window.todoListWindow = new TodoListWindow();
+
+  const todoListButton = jQuery(
+    `<button><i class="fas fa-tasks"></i>${game.i18n.localize(
+      "keikaku.journalbutton"
+    )}</button>`
+  );
+  todoListButton.on("click", () => window.todoListWindow.render(true));
+
+  html.find(".directory-header .header-actions").append(todoListButton);
+}
+
+/**
+ * Show a dialog reminding players of their to-do list.
+ * Depending on the `showReminder` setting the reminder is displayed
+ * - never
+ * - when players have unfinished tasks
+ * - always
+ */
+function showReminder() {
+  const list = TodoList.load();
+  const level = game.settings.get("fvtt-keikaku", "showReminder");
+
+  if (level == "never" || (level == "incomplete" && !list.incomplete)) return;
+
+  const content = list.incomplete
+    ? game.i18n.localize("keikaku.reminder.incomplete")
+    : game.i18n.localize("keikaku.reminder.complete");
+
+  const reminder = new Dialog({
+    title: game.i18n.localize("keikaku.reminder.title"),
+    content: `<p>${content}</p>`,
+    buttons: {
+      todo: {
+        icon: '<i class="fas fa-tasks"></i>',
+        label: game.i18n.localize("keikaku.reminder.button"),
+        callback: () => window.todoListWindow.render(true),
+      },
+    },
+  });
+
+  reminder.render(true);
 }
 
 /**
@@ -132,10 +180,7 @@ class TaskForm extends FormApplication {
 export async function initUiComponents(html) {
   await preloadTemplates();
 
-  window.todoListWindow = new TodoListWindow();
+  setupTodoListWindow(html);
 
-  const todoListButton = jQuery(`<button><i class="fas fa-tasks"></i>${game.i18n.localize("keikaku.journalbutton")}</button>`);
-  todoListButton.on("click", () => window.todoListWindow.render(true));
-
-  html.find(".directory-header .header-actions").append(todoListButton);
+  showReminder();
 }

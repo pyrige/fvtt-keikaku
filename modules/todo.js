@@ -97,4 +97,9 @@ export class TodoList {
     this.tasks.splice(newIndex, 0, this.tasks.splice(oldIndex, 1)[0]);
     await this.store();
   }
+
+  /** Check whether there are any incomplete tasks. **/
+  get incomplete() {
+    return this.tasks.some((task) => !task.done);
+  }
 }
