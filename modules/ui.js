@@ -145,7 +145,7 @@ function setupTodoListWindow(html) {
  * - when players have unfinished tasks
  * - always
  */
-function showReminder() {
+export function showReminder() {
   const list = TodoList.load();
   const level = game.settings.get("fvtt-keikaku", "showReminder");
 
@@ -183,6 +183,4 @@ export async function initUiComponents(html) {
   await preloadTemplates();
 
   setupTodoListWindow(html);
-
-  showReminder();
 }

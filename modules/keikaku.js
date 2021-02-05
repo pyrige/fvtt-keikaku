@@ -1,7 +1,7 @@
 /* global game, Hooks */
 
 import * as logger from "./logger.js";
-import { initUiComponents } from "./ui.js";
+import { initUiComponents, showReminder } from "./ui.js";
 
 /** Register Keikaku settings */
 function registerSettings() {
@@ -39,4 +39,8 @@ Hooks.once("ready", async () => {
 
 Hooks.on("renderJournalDirectory", async (_app, html, _data) => {
   await initUiComponents(html);
+});
+
+Hooks.once("renderJournalDirectory", async (_app, _html, _data) => {
+  showReminder();
 });
