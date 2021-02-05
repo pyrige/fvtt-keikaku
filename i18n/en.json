@@ -5,6 +5,7 @@
   "keikaku.reminder.title": "To-Do List Reminder",
   "keikaku.reminder.complete": "All your tasks are complete. Do you want to add a new one?",
   "keikaku.reminder.incomplete": "There are unfinished tasks in your to-do list.",
+  "keikaku.reminder.hint": "You can change when this dialog is shown in the module settings.",
   "keikaku.reminder.button": "Open To-Do List",
 
   "keikaku.settings.name": "Remind Players",

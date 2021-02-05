@@ -155,9 +155,11 @@ function showReminder() {
     ? game.i18n.localize("keikaku.reminder.incomplete")
     : game.i18n.localize("keikaku.reminder.complete");
 
+  const hint = game.i18n.localize("keikaku.reminder.hint");
+
   const reminder = new Dialog({
     title: game.i18n.localize("keikaku.reminder.title"),
-    content: `<p>${content}</p>`,
+    content: `<p>${content}</p><p><small>${hint}</small></p>`,
     buttons: {
       todo: {
         icon: '<i class="fas fa-tasks"></i>',
