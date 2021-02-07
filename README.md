@@ -6,6 +6,12 @@
   </a>
   <img src="https://img.shields.io/github/issues/pyrige/fvtt-keikaku">
   <img src="https://img.shields.io/github/workflow/status/pyrige/fvtt-keikaku/Foundry%20VTT%20Module%20Release">
+  <a href="https://lgtm.com/projects/g/pyrige/fvtt-keikaku/alerts/">
+    <img alt="Total alerts" src="https://img.shields.io/lgtm/alerts/g/pyrige/fvtt-keikaku.svg?logo=lgtm&logoWidth=18">
+  </a>
+  <a href="https://lgtm.com/projects/g/pyrige/fvtt-keikaku/context:javascript">
+    <img alt="Language grade: JavaScript" src="https://img.shields.io/lgtm/grade/javascript/g/pyrige/fvtt-keikaku.svg?logo=lgtm&logoWidth=18">
+  </a>
   <img src="https://img.shields.io/github/license/pyrige/fvtt-keikaku">
 </p>
 
