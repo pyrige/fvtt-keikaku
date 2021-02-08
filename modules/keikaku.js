@@ -20,6 +20,10 @@ function registerSettings() {
   });
 }
 
+Hooks.once("setup", async () => {
+  registerSettings();
+});
+
 Hooks.once("ready", async () => {
   const banner = `${game.i18n.localize("keikaku.initializing")}
 ============================================================
@@ -33,8 +37,6 @@ Hooks.once("ready", async () => {
 ============================================================`;
 
   logger.info(banner);
-
-  registerSettings();
 });
 
 Hooks.on("renderJournalDirectory", async (_app, html, _data) => {
