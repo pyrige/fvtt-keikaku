@@ -16,7 +16,7 @@ function registerSettings() {
       incomplete: game.i18n.localize("keikaku.settings.choice.incomplete"),
       always: game.i18n.localize("keikaku.settings.choice.always"),
     },
-    default: "incomplete",
+    default: "always",
   });
 }
 
