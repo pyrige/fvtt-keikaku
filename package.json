@@ -1,6 +1,6 @@
 {
   "name": "fvtt-keikaku",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Simple to-do list module for Foundry VTT",
   "repository": "https://github.com/pyrige/fvtt-keikaku",
   "author": "Kevin Perry",
