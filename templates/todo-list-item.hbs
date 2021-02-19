@@ -12,17 +12,25 @@
     </a>
     {{/if}}
 
-    <p class="todo-description {{#if done}}todo-done{{/if}}">
-      {{ description }}
+    <p class="todo-description {{#if done}}todo-done{{/if}}" style="color: {{ color }}">
+      {{#if (eq icon 1)}}
+      <i class="fas fa-exclamation-circle"></i>
+      {{/if}}
+      {{#if (eq icon 2)}}
+      <i class="fas fa-question-circle"></i>
+      {{/if}}
+      <span class="description">
+        {{ description }}
+      </span>
     </p>
 
     <a class="todo-control" data-index="{{ @index }}" data-action="todo-edit" title="{{ localize "
       keikaku.todolistwindow.edittask" }}">
-      <i class="far fa-edit"></i>
+      <i class="fas fa-edit"></i>
     </a>
     <a class="todo-control" data-index="{{ @index }}" data-action="todo-delete" title="{{ localize "
       keikaku.todolistwindow.deletetask" }}">
-      <i class="far fa-trash-alt"></i>
+      <i class="fas fa-trash-alt"></i>
     </a>
   </div>
 </li>

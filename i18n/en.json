@@ -15,8 +15,14 @@
   "keikaku.settings.choice.always": "Always",
 
   "keikaku.taskform.title": "Edit Task",
+  "keikaku.taskform.field.color": "Color",
+  "keikaku.taskform.field.done": "Completed",
+  "keikaku.taskform.field.icon": "Icon",
+  "keikaku.taskform.field.icons.none": "None",
+  "keikaku.taskform.field.icons.important": "Important",
+  "keikaku.taskform.field.icons.optional": "Optional",
+  "keikaku.taskform.field.description": "Description",
   "keikaku.taskform.createtask": "Create Task",
-  "keikaku.taskform.description": "Description",
   "keikaku.taskform.updatetask": "Update Task",
 
   "keikaku.todolistwindow.title": "To-Do List",

@@ -107,14 +107,20 @@ class TaskForm extends FormApplication {
 
   /** @override */
   getData() {
-    return { index: this.index, description: this.task.description };
+    return {
+      index: this.index,
+
+      task: this.task,
+    };
   }
 
   /** @override */
   async _updateObject(_event, data) {
+    const task = new Task(data.description, data.done, data.color, data.icon);
+
     const list = TodoList.load();
-    if (data.index) await list.updateTask(data.index, data.description);
-    else await list.appendTask(data.description);
+    if (data.index) await list.updateTask(data.index, task);
+    else await list.appendTask(task);
 
     window.todoListWindow.render(true);
   }

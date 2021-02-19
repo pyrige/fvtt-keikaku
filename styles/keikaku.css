@@ -25,6 +25,6 @@
   margin-right: 10px;
 }
 
-#keikaku-todo-list .todo-description.todo-done {
+#keikaku-todo-list .todo-description.todo-done span.description {
   text-decoration: line-through;
 }

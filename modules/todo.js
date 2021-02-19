@@ -1,16 +1,35 @@
 /* global game */
 
+/** The default font color used by vanilla Foundry. **/
+const DEFAULT_COLOR = "#191813";
+const ICONS = {
+  NONE: 0,
+  IMPORTANT: 1,
+  OPTIONAL: 2,
+};
+
 export class Task {
   /**
    * Create a new task with the given `description`.
    * @param {string} description is the task's description.
    * @param {boolean} done is the task's completion state.
+   * @param {string} color is the task's color.
+   * @param {number} icon is the task's optional icon.
    **/
-  constructor(description = "", done = false) {
+  constructor(
+    description = "",
+    done = false,
+    color = DEFAULT_COLOR,
+    icon = ICONS.NONE
+  ) {
     /** The task's description. **/
     this.description = description;
     /** The task's state of completion. **/
     this.done = done;
+    /** The task's color. */
+    this.color = color;
+    /** The task's icon. */
+    this.icon = icon;
   }
 }
 
@@ -28,9 +47,14 @@ export class TodoList {
    * @return {TodoList} the to-do list read from user data
    **/
   static load() {
-    const tasks = game.user.getFlag("fvtt-keikaku", "tasks");
+    const savedTasks = game.user.getFlag("fvtt-keikaku", "tasks");
+    if (!savedTasks) return new TodoList();
 
-    return new TodoList(tasks ? JSON.parse(tasks) : undefined);
+    const tasks = JSON.parse(savedTasks).map((task) =>
+      Object.assign(new Task(), task)
+    );
+
+    return new TodoList(tasks);
   }
 
   /** Store the current user's to-do list in the database. **/
@@ -41,12 +65,11 @@ export class TodoList {
 
   /**
    * Add a new task with the given `description`.
-   * @param {string} description is the task's description
+   * @param {Task} task is the task to append to the list
    * @returns {Promise<number>} the number of managed tasks.
    **/
-  async appendTask(description) {
-    const newTask = new Task(description);
-    this.tasks.push(newTask);
+  async appendTask(task) {
+    this.tasks.push(task);
 
     await this.store();
 
@@ -69,10 +92,10 @@ export class TodoList {
   /**
    * Updates the task description at the given `index`.
    * @param {number} index is the index to be deleted
-   * @param {string} description is the task's description
+   * @param {Task} task is the updated task
    **/
-  async updateTask(index, description) {
-    this.tasks[index].description = description;
+  async updateTask(index, task) {
+    this.tasks[index] = task;
 
     await this.store();
   }
