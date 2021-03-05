@@ -135,13 +135,15 @@ function setupTodoListWindow(html) {
   window.todoListWindow = new TodoListWindow();
 
   const todoListButton = jQuery(
-    `<button><i class="fas fa-tasks"></i>${game.i18n.localize(
-      "keikaku.journalbutton"
-    )}</button>`
+    `<div class="action-buttons flexrow">
+       <button><i class="fas fa-tasks"></i>${game.i18n.localize(
+         "keikaku.journalbutton"
+       )}</button>
+     </div>`
   );
   todoListButton.on("click", () => window.todoListWindow.render(true));
 
-  html.find(".directory-header .header-actions").append(todoListButton);
+  html.find(".directory-footer").append(todoListButton);
 }
 
 /**
