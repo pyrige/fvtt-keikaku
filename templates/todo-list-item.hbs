@@ -13,16 +13,21 @@
     {{/if}}
 
     <p class="todo-description {{#if done}}todo-done{{/if}}" style="color: {{ color }}">
-      {{#if (eq icon 1)}}
-      <i class="fas fa-exclamation-circle"></i>
-      {{/if}}
-      {{#if (eq icon 2)}}
-      <i class="fas fa-question-circle"></i>
-      {{/if}}
       <span class="description">
         {{ description }}
       </span>
     </p>
+
+    {{#if (eq tag 1)}}
+    <span class="tag" style="background-color: {{ color }}">
+      {{ localize "keikaku.todolistwindow.tags.important" }}
+    </span>
+    {{/if}}
+    {{#if (eq tag 2)}}
+    <span class="tag" style="background-color: {{ color }}">
+      {{ localize "keikaku.todolistwindow.tags.optional" }}
+    </span>
+    {{/if}}
 
     <a class="todo-control" data-index="{{ @index }}" data-action="todo-edit" title="{{ localize "
       keikaku.todolistwindow.edittask" }}">

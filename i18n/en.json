@@ -17,10 +17,10 @@
   "keikaku.taskform.title": "Edit Task",
   "keikaku.taskform.field.color": "Color",
   "keikaku.taskform.field.done": "Completed",
-  "keikaku.taskform.field.icon": "Icon",
-  "keikaku.taskform.field.icons.none": "None",
-  "keikaku.taskform.field.icons.important": "Important",
-  "keikaku.taskform.field.icons.optional": "Optional",
+  "keikaku.taskform.field.tag": "Tag",
+  "keikaku.taskform.field.tags.none": "None",
+  "keikaku.taskform.field.tags.important": "Important",
+  "keikaku.taskform.field.tags.optional": "Optional",
   "keikaku.taskform.field.description": "Description",
   "keikaku.taskform.createtask": "Create Task",
   "keikaku.taskform.updatetask": "Update Task",
@@ -31,5 +31,7 @@
   "keikaku.todolistwindow.edittask": "Edit Task",
   "keikaku.todolistwindow.incompletetask": "Mark Incomplete",
   "keikaku.todolistwindow.newtask": "New Task",
-  "keikaku.todolistwindow.placeholder": "There's nothing for you to do at the moment. Add a task to get started."
+  "keikaku.todolistwindow.placeholder": "There's nothing for you to do at the moment. Add a task to get started.",
+  "keikaku.todolistwindow.tags.important": "important",
+  "keikaku.todolistwindow.tags.optional": "optional"
 }

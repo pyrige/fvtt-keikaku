@@ -116,7 +116,7 @@ class TaskForm extends FormApplication {
 
   /** @override */
   async _updateObject(_event, data) {
-    const task = new Task(data.description, data.done, data.color, data.icon);
+    const task = new Task(data.description, data.done, data.color, data.tag);
 
     const list = TodoList.load();
     if (data.index) await list.updateTask(data.index, task);

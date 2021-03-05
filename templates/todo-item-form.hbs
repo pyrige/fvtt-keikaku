@@ -12,14 +12,14 @@
 
     <div class="form-group">
       <div class="form-fields">
-        <label for="fieldIcons">
-          {{ localize "keikaku.taskform.field.icon" }}
+        <label for="fieldTags">
+          {{ localize "keikaku.taskform.field.tag" }}
         </label>
-        <select id="fieldIcons" name="icon" data-dtype="Number">
-          {{#select task.icon}}
-          <option value="0">{{ localize "keikaku.taskform.field.icons.none" }}</option>
-          <option value="1">{{ localize "keikaku.taskform.field.icons.important" }}</option>
-          <option value="2">{{ localize "keikaku.taskform.field.icons.optional" }}</option>
+        <select id="fieldTags" name="tag" data-dtype="Number">
+          {{#select task.tag}}
+          <option value="0">{{ localize "keikaku.taskform.field.tags.none" }}</option>
+          <option value="1">{{ localize "keikaku.taskform.field.tags.important" }}</option>
+          <option value="2">{{ localize "keikaku.taskform.field.tags.optional" }}</option>
           {{/select}}
         </select>
 

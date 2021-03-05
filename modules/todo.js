@@ -2,7 +2,7 @@
 
 /** The default font color used by vanilla Foundry. **/
 const DEFAULT_COLOR = "#191813";
-const ICONS = {
+const TAGS = {
   NONE: 0,
   IMPORTANT: 1,
   OPTIONAL: 2,
@@ -14,13 +14,13 @@ export class Task {
    * @param {string} description is the task's description.
    * @param {boolean} done is the task's completion state.
    * @param {string} color is the task's color.
-   * @param {number} icon is the task's optional icon.
+   * @param {number} tag is the task's optional tag.
    **/
   constructor(
     description = "",
     done = false,
     color = DEFAULT_COLOR,
-    icon = ICONS.NONE
+    tag = TAGS.NONE
   ) {
     /** The task's description. **/
     this.description = description;
@@ -28,8 +28,8 @@ export class Task {
     this.done = done;
     /** The task's color. */
     this.color = color;
-    /** The task's icon. */
-    this.icon = icon;
+    /** The task's tag. */
+    this.tag = tag;
   }
 }
 

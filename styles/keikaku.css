@@ -28,3 +28,12 @@
 #keikaku-todo-list .todo-description.todo-done span.description {
   text-decoration: line-through;
 }
+
+#keikaku-todo-list span.tag {
+  flex: 0;
+  font-size: smaller;
+  padding: 1px 3px;
+  color: #f0f0e0;
+  border: 1px solid #b5b3a4;
+  border-radius: 3px;
+}
