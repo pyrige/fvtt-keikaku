@@ -28,6 +28,9 @@ The module adds a button to open the to-do list at the top of the _Journal Direc
 
 This work is licensed under the [MIT license](LICENSE), as well as [Foundry Virtual Tabletop EULA - Limited License Agreement for Module Development](https://foundryvtt.com/article/license/).
 
+## Attribution
+Please see the [CONTRIBUTORS](CONTRIBUTORS.md) file for a list of substantial contributors.
+
 ### Translator's Note
 
 Keikaku means plan.
