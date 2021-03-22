@@ -1,7 +1,6 @@
 /* global game */
 
 /** The default font color used by vanilla Foundry. **/
-const DEFAULT_COLOR = "#191813";
 const TAGS = {
   NONE: 0,
   IMPORTANT: 1,
@@ -19,7 +18,7 @@ export class Task {
   constructor(
     description = "",
     done = false,
-    color = DEFAULT_COLOR,
+    color = game.settings.get("fvtt-keikaku", "defaultColor"),
     tag = TAGS.NONE
   ) {
     /** The task's description. **/
