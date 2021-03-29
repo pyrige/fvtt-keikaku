@@ -20,7 +20,6 @@
 }
 
 #keikaku-todo-list .todo-description {
-  text-align: justify;
   flex: auto;
   margin-right: 10px;
 }
