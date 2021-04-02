@@ -1,6 +1,6 @@
 /* global game */
 
-/** The default font color used by vanilla Foundry. **/
+/** The selection of optional tags. **/
 const TAGS = {
   NONE: 0,
   IMPORTANT: 1,
@@ -12,23 +12,23 @@ export class Task {
    * Create a new task with the given `description`.
    * @param {string} description is the task's description.
    * @param {boolean} done is the task's completion state.
-   * @param {string} color is the task's color.
    * @param {number} tag is the task's optional tag.
+   * @param {string?} color is the task's color.
    **/
   constructor(
     description = "",
     done = false,
-    color = game.settings.get("fvtt-keikaku", "defaultColor"),
-    tag = TAGS.NONE
+    tag = TAGS.NONE,
+    color = undefined
   ) {
     /** The task's description. **/
     this.description = description;
     /** The task's state of completion. **/
     this.done = done;
-    /** The task's color. */
-    this.color = color;
     /** The task's tag. */
     this.tag = tag;
+    /** The task's color. */
+    this.color = color;
   }
 }
 

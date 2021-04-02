@@ -14,9 +14,6 @@
   "keikaku.settings.reminder.choice.incomplete": "Unfinished Tasks",
   "keikaku.settings.reminder.choice.always": "Always",
 
-  "keikaku.settings.default_color.name": "Default Reminder Color",
-  "keikaku.settings.default_color.hint": "The default color of tasks",
-
   "keikaku.taskform.title": "Edit Task",
   "keikaku.taskform.field.color": "Color",
   "keikaku.taskform.field.done": "Completed",
