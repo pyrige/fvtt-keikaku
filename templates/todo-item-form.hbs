@@ -1,16 +1,25 @@
 <form autocomplete="off">
   <section class="task">
-    <div class="form-group">
+    <fieldset class="form-group stacked">
       <div class="form-fields">
-        <label for="description">
+        <label for="fieldDescription">
           {{ localize "keikaku.taskform.field.description" }}
         </label>
         <input type="text" id="fieldDescription" name="description" value="{{ task.description }}" data-dtype="String"
           required="true">
       </div>
-    </div>
 
-    <div class="form-group">
+      <div class="form-fields">
+        <label for="fieldDone">
+          {{ localize "keikaku.taskform.field.done" }}
+        </label>
+        <input type="checkbox" id="fieldDone" name="done" data-dtype="Boolean" {{checked task.done}}>
+      </div>
+    </fieldset>
+
+    <fieldset class="form-group stacked">
+      <legend>{{ localize "keikaku.taskform.customization" }}</legend>
+
       <div class="form-fields">
         <label for="fieldTags">
           {{ localize "keikaku.taskform.field.tag" }}
@@ -22,18 +31,17 @@
           <option value="2">{{ localize "keikaku.taskform.field.tags.optional" }}</option>
           {{/select}}
         </select>
+      </div>
 
-        <label for="color">
+      <div class="form-fields">
+        <label for="fieldUseColor">
           {{ localize "keikaku.taskform.field.color" }}
         </label>
-        <input type="color" id="fieldColor" name="color" value="{{ task.color }}" data-dtype="String" required>
-
-        <label class="checkbox" for="fieldDone">
-          {{ localize "keikaku.taskform.field.done" }}
-        </label>
-        <input type="checkbox" id="fieldDone" name="done" data-dtype="Boolean" {{checked task.done}}>
+        <input type="checkbox" id="fieldUseColor" name="useColor" data-dtype="Boolean" {{checked task.color}}>
+        <input {{#if task.color}}value="{{ task.color }}" {{/if}} {{ keikaku_disabled task.color }} type="color"
+          id="fieldColor" name="color" data-dtype="String">
       </div>
-    </div>
+    </fieldset>
 
     <input type="hidden" name="index" value="{{ index }}">
   </section>

@@ -1,7 +1,8 @@
-/* global jQuery, Sortable */
+/* global jQuery, Handlebars, Sortable */
 /* global game, loadTemplates, mergeObject, Application, FormApplication, Dialog */
 
 import { Task, TodoList } from "./todo.js";
+import { RGBColor } from "./colors.js";
 
 /**
  * Parse handlebar templates included with keikaku.
@@ -13,6 +14,10 @@ async function preloadTemplates() {
     "modules/fvtt-keikaku/templates/todo-list-item.hbs",
     "modules/fvtt-keikaku/templates/todo-item-form.hbs",
   ];
+
+  Handlebars.registerHelper("keikaku_disabled", (value) =>
+    !value ? "disabled" : ""
+  );
 
   return loadTemplates(templates);
 }
@@ -30,6 +35,11 @@ export class TodoListWindow extends Application {
     });
   }
 
+  /**
+   * Set up interactivity for the window.
+   *
+   * @param {JQuery} html is the rendered HTML provided by jQuery
+   **/
   activateListeners(html) {
     super.activateListeners(html);
 
@@ -72,6 +82,26 @@ export class TodoListWindow extends Application {
     html.on("click", "button.todo-new", async function () {
       new TaskForm(undefined, undefined).render(true);
     });
+
+    // tags are colored based on the task color
+    html.find("#keikaku-todo-list span.tag").each(function () {
+      const tag = jQuery(this);
+
+      // we use the computed color if the description
+      // this lets use work with tasks that don't have a color
+      const desc = tag.siblings("p.todo-description");
+      const color = desc.css("color");
+      const parsed = RGBColor.parse(color);
+      const contrast = parsed.contrastColor();
+
+      tag.css("background-color", parsed.toCSS());
+      tag.css("color", contrast.toCSS());
+
+      // we base the border color on the regular text color
+      const control = tag.siblings("a.todo-control");
+      const borderColor = control.css("color");
+      tag.css("border-color", borderColor);
+    });
   }
 
   /**
@@ -105,6 +135,23 @@ class TaskForm extends FormApplication {
     this.index = index;
   }
 
+  /**
+   * Set up interactivity for the form.
+   *
+   * @param {JQuery} html is the rendered HTML provided by jQuery
+   **/
+  activateListeners(html) {
+    super.activateListeners(html);
+
+    // just to avoid confusion, we disable the color input based on the checkbox
+    html.on("change", "input#fieldUseColor", function () {
+      jQuery("input#fieldColor").prop(
+        "disabled",
+        !jQuery(this).prop("checked")
+      );
+    });
+  }
+
   /** @override */
   getData() {
     return {
@@ -116,7 +163,8 @@ class TaskForm extends FormApplication {
 
   /** @override */
   async _updateObject(_event, data) {
-    const task = new Task(data.description, data.done, data.color, data.tag);
+    const color = data.useColor ? data.color : null;
+    const task = new Task(data.description, data.done, data.tag, color);
 
     const list = TodoList.load();
     if (data.index) await list.updateTask(data.index, task);

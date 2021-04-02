@@ -1,40 +1,40 @@
 <li>
   <div class="flexrow">
     {{#if done}}
-    <a class="todo-control" data-index="{{ @index }}" data-action="todo-toggle" title="{{ localize "
-      keikaku.todolistwindow.incompletetask" }}">
+    <a title="{{ localize 'keikaku.todolistwindow.incompletetask' }}" class="todo-control" data-index="{{ @index }}"
+      data-action="todo-toggle">
       <i class="far fa-lg fa-check-square"></i>
     </a>
     {{else}}
-    <a class="todo-control" data-index="{{ @index }}" data-action="todo-toggle" title="{{ localize "
-      keikaku.todolistwindow.completetask" }}">
+    <a title="{{ localize 'keikaku.todolistwindow.completetask' }}" class="todo-control" data-index="{{ @index }}"
+      data-action="todo-toggle">
       <i class="far fa-lg fa-square"></i>
     </a>
     {{/if}}
 
-    <p class="todo-description {{#if done}}todo-done{{/if}}" style="color: {{ color }}">
+    <p class="todo-description {{#if done}}todo-done{{/if}}" {{#if color}}style="color: {{ color }}" {{/if}}>
       <span class="description">
         {{ description }}
       </span>
     </p>
 
     {{#if (eq tag 1)}}
-    <span class="tag" style="background-color: {{ color }}">
+    <span class="tag">
       {{ localize "keikaku.todolistwindow.tags.important" }}
     </span>
     {{/if}}
     {{#if (eq tag 2)}}
-    <span class="tag" style="background-color: {{ color }}">
+    <span class="tag">
       {{ localize "keikaku.todolistwindow.tags.optional" }}
     </span>
     {{/if}}
 
-    <a class="todo-control" data-index="{{ @index }}" data-action="todo-edit" title="{{ localize "
-      keikaku.todolistwindow.edittask" }}">
+    <a title="{{ localize 'keikaku.todolistwindow.edittask' }}" class="todo-control" data-index="{{ @index }}"
+      data-action="todo-edit">
       <i class="fas fa-edit"></i>
     </a>
-    <a class="todo-control" data-index="{{ @index }}" data-action="todo-delete" title="{{ localize "
-      keikaku.todolistwindow.deletetask" }}">
+    <a title="{{ localize 'keikaku.todolistwindow.deletetask' }}" class="todo-control" data-index="{{ @index }}"
+      data-action="todo-delete">
       <i class="fas fa-trash-alt"></i>
     </a>
   </div>

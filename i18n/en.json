@@ -22,6 +22,7 @@
   "keikaku.taskform.field.tags.important": "Important",
   "keikaku.taskform.field.tags.optional": "Optional",
   "keikaku.taskform.field.description": "Description",
+  "keikaku.taskform.customization": "Customization",
   "keikaku.taskform.createtask": "Create Task",
   "keikaku.taskform.updatetask": "Update Task",
 

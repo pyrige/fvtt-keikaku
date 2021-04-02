@@ -13,14 +13,9 @@ export class Task {
    * @param {string} description is the task's description.
    * @param {boolean} done is the task's completion state.
    * @param {number} tag is the task's optional tag.
-   * @param {string?} color is the task's color.
+   * @param {string | null} color is the task's color.
    **/
-  constructor(
-    description = "",
-    done = false,
-    tag = TAGS.NONE,
-    color = undefined
-  ) {
+  constructor(description = "", done = false, tag = TAGS.NONE, color = null) {
     /** The task's description. **/
     this.description = description;
     /** The task's state of completion. **/
