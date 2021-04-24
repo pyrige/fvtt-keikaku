@@ -1,19 +1,38 @@
+{{#if players}}
+<div id="player-selection" class="flex0">
+  {{ localize "keikaku.todolistwindow.playerselection" }}:
+  <select id="player-selector">
+    {{#select selectedPlayer.id}}
+    {{#each players}}
+    <option value="{{id}}">{{name}}</option>
+    {{/each}}
+    {{/select}}
+  </select>
+</div>
+{{/if}}
+
 <div>
-  {{#if tasks }}
-  <ol id="keikaku-todo-list">
+  {{#if tasks}}
+  <ol id="tasks">
     {{#each tasks}}
-    {{> modules/fvtt-keikaku/templates/todo-list-item.hbs }}
+    {{> modules/fvtt-keikaku/templates/todo-list-item.hbs isOwner=../selectedPlayer.isOwner}}
     {{/each}}
   </ol>
   {{else}}
   <p>
-    {{ localize "keikaku.todolistwindow.placeholder" }}
+    {{#if selectedPlayer.isOwner}}
+    {{ localize "keikaku.todolistwindow.placeholder.owner" }}
+    {{else}}
+    {{ localize "keikaku.todolistwindow.placeholder.other" }}
+    {{/if}}
   </p>
   {{/if}}
 </div>
 
+{{#if selectedPlayer.isOwner}}
 <div class="flex0">
-  <button class="todo-new">
+  <button id="todo-new">
     <i class="fas fa-plus"></i> {{ localize "keikaku.todolistwindow.newtask" }}
   </button>
 </div>
+{{/if}}

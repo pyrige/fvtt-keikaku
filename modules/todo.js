@@ -1,5 +1,3 @@
-/* global game */
-
 /** The selection of optional tags. **/
 const TAGS = {
   NONE: 0,
@@ -13,15 +11,24 @@ export class Task {
    * @param {string} description is the task's description.
    * @param {boolean} done is the task's completion state.
    * @param {number} tag is the task's optional tag.
+   * @param {boolean} secret determines if the task is hidden from GMs.
    * @param {string | null} color is the task's color.
    **/
-  constructor(description = "", done = false, tag = TAGS.NONE, color = null) {
+  constructor(
+    description = "",
+    done = false,
+    tag = TAGS.NONE,
+    secret = false,
+    color = null
+  ) {
     /** The task's description. **/
     this.description = description;
     /** The task's state of completion. **/
     this.done = done;
     /** The task's tag. */
     this.tag = tag;
+    /** Is the task hidden from GMs? **/
+    this.secret = secret;
     /** The task's color. */
     this.color = color;
   }
@@ -30,31 +37,35 @@ export class Task {
 export class TodoList {
   /**
    * Create a to-do list from an array of tasks.
+   * @param {User} owner is the to-do list's owner.
    * @param {Array<Task>} tasks is the array of tasks in the to-do list.
    */
-  constructor(tasks = []) {
+  constructor(owner, tasks = []) {
+    this.owner = owner;
     this.tasks = tasks;
   }
 
   /**
-   * Load the current user's to-do list (if any) from the database.
+   * Load a user's to-do list (if any) from the database.
+   * @param {User} owner is the to-do list's owner.
+   *
    * @return {TodoList} the to-do list read from user data
    **/
-  static load() {
-    const savedTasks = game.user.getFlag("fvtt-keikaku", "tasks");
-    if (!savedTasks) return new TodoList();
+  static load(owner) {
+    const savedTasks = owner.getFlag("fvtt-keikaku", "tasks");
+    if (!savedTasks) return new TodoList(owner);
 
     const tasks = JSON.parse(savedTasks).map((task) =>
       Object.assign(new Task(), task)
     );
 
-    return new TodoList(tasks);
+    return new TodoList(owner, tasks);
   }
 
-  /** Store the current user's to-do list in the database. **/
+  /** Store the user's to-do list in the database. **/
   async store() {
     const tasks = JSON.stringify(this.tasks);
-    await game.user.setFlag("fvtt-keikaku", "tasks", tasks);
+    await this.owner.setFlag("fvtt-keikaku", "tasks", tasks);
   }
 
   /**

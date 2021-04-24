@@ -10,9 +10,10 @@ import { RGBColor } from "./colors.js";
  */
 async function preloadTemplates() {
   const templates = [
-    "modules/fvtt-keikaku/templates/todo-list.hbs",
-    "modules/fvtt-keikaku/templates/todo-list-item.hbs",
     "modules/fvtt-keikaku/templates/todo-item-form.hbs",
+    "modules/fvtt-keikaku/templates/todo-list-control.hbs",
+    "modules/fvtt-keikaku/templates/todo-list-item.hbs",
+    "modules/fvtt-keikaku/templates/todo-list.hbs",
   ];
 
   Handlebars.registerHelper("keikaku_disabled", (value) =>
@@ -35,6 +36,25 @@ export class TodoListWindow extends Application {
     });
   }
 
+  /** Construct a new TodoList window.
+   * Determine the active user and if they are a GM, populate players array.
+   **/
+  constructor() {
+    super();
+
+    this.selectedPlayer = {
+      id: game.user.id,
+      isOwner: true,
+    };
+
+    // only for a GM do we bother to populate the players list
+    this.players = game.user.isGM
+      ? game.users.map((u) => {
+          return { name: u.name, id: u.id };
+        })
+      : null;
+  }
+
   /**
    * Set up interactivity for the window.
    *
@@ -43,49 +63,20 @@ export class TodoListWindow extends Application {
   activateListeners(html) {
     super.activateListeners(html);
 
-    const listEl = html.find("#keikaku-todo-list").get(0);
-    if (listEl) {
-      Sortable.create(listEl, {
-        onEnd: async (evt) => {
-          if (evt.oldIndex == evt.newIndex) return;
+    html.on("change", "select#player-selector", async (evt) => {
+      const id = jQuery(evt.currentTarget).val().toString();
 
-          const list = window.todoListWindow.getData();
-          await list.moveTask(evt.oldIndex, evt.newIndex);
-          window.todoListWindow.render(true);
-        },
-      });
-    }
+      this.selectedPlayer = {
+        id: id,
+        isOwner: id === game.user.id,
+      };
 
-    html.on("click", "a.todo-control", async function () {
-      const index = jQuery(this).data("index");
-      const action = jQuery(this).data("action");
-
-      const list = window.todoListWindow.getData();
-
-      switch (action) {
-        case "todo-toggle":
-          await list.toggleTask(index);
-          break;
-        case "todo-delete":
-          await list.deleteTask(index);
-          break;
-        case "todo-edit":
-          new TaskForm(list.tasks[index], index).render(true);
-          break;
-        default:
-          return;
-      }
-
-      window.todoListWindow.render(true);
-    });
-
-    html.on("click", "button.todo-new", async function () {
-      new TaskForm(undefined, undefined).render(true);
+      this.render(true);
     });
 
     // tags are colored based on the task color
-    html.find("#keikaku-todo-list span.tag").each(function () {
-      const tag = jQuery(this);
+    html.find("ol#tasks span.tag").each((index, element) => {
+      const tag = jQuery(element);
 
       // we use the computed color if the description
       // this lets use work with tasks that don't have a color
@@ -98,17 +89,74 @@ export class TodoListWindow extends Application {
       tag.css("color", contrast.toCSS());
 
       // we base the border color on the regular text color
-      const control = tag.siblings("a.todo-control");
+      const control = tag.siblings(".todo-control");
       const borderColor = control.css("color");
       tag.css("border-color", borderColor);
     });
+
+    // modification events are only relevant if the user owns the list
+    if (!this.selectedPlayer.isOwner) return;
+
+    html.on("click", "a.todo-control", async (evt) => {
+      const target = jQuery(evt.currentTarget);
+      const index = target.data("index");
+      const action = target.data("action");
+
+      // the list can only belong to the current user
+      const owner = game.user;
+      const list = TodoList.load(owner);
+
+      switch (action) {
+        case "toggle":
+          await list.toggleTask(index);
+          break;
+        case "delete":
+          await list.deleteTask(index);
+          break;
+        case "edit": {
+          const task = list.tasks[index];
+          new TaskForm(owner, task, index).render(true);
+          break;
+        }
+        default:
+          return;
+      }
+
+      this.render(true);
+    });
+
+    html.on("click", "button#todo-new", async () => {
+      const owner = game.user;
+      new TaskForm(owner).render(true);
+    });
+
+    html.find("ol#tasks").each((index, element) => {
+      Sortable.create(element, {
+        onEnd: async (evt) => {
+          if (evt.oldIndex == evt.newIndex) return;
+
+          const owner = game.user;
+          const list = TodoList.load(owner);
+          await list.moveTask(evt.oldIndex, evt.newIndex);
+          this.render(true);
+        },
+      });
+    });
   }
 
-  /**
-   * @returns {TodoList}
-   */
+  /** @override */
   getData() {
-    return TodoList.load();
+    const owner = game.users.get(this.selectedPlayer.id);
+    const list = TodoList.load(owner);
+    const tasks = this.selectedPlayer.isOwner
+      ? list.tasks
+      : list.tasks.filter((task) => !task.secret);
+
+    return {
+      selectedPlayer: this.selectedPlayer,
+      players: this.players,
+      tasks: tasks,
+    };
   }
 }
 
@@ -125,12 +173,14 @@ class TaskForm extends FormApplication {
   }
 
   /**
-   * @param {Task} task is the (optional) task to edit
+   * @param {User} owner is the task's owner.
+   * @param {Task?} task is the (optional) task to edit
    * @param {number?} index is the (optional) index in the to-do list
    **/
-  constructor(task, index) {
+  constructor(owner, task = undefined, index = undefined) {
     super();
 
+    this.owner = owner;
     this.task = task ?? new Task();
     this.index = index;
   }
@@ -144,30 +194,33 @@ class TaskForm extends FormApplication {
     super.activateListeners(html);
 
     // just to avoid confusion, we disable the color input based on the checkbox
-    html.on("change", "input#fieldUseColor", function () {
-      jQuery("input#fieldColor").prop(
-        "disabled",
-        !jQuery(this).prop("checked")
-      );
+    html.on("change", "input#fieldUseColor", (evt) => {
+      const checked = jQuery(evt.currentTarget).prop("checked");
+      html.find("input#fieldColor").prop("disabled", !checked);
     });
   }
 
   /** @override */
   getData() {
     return {
-      index: this.index,
-
       task: this.task,
+      index: this.index,
     };
   }
 
   /** @override */
   async _updateObject(_event, data) {
     const color = data.useColor ? data.color : null;
-    const task = new Task(data.description, data.done, data.tag, color);
+    const task = new Task(
+      data.description,
+      data.done,
+      data.tag,
+      data.secret,
+      color
+    );
 
-    const list = TodoList.load();
-    if (data.index) await list.updateTask(data.index, task);
+    const list = TodoList.load(this.owner);
+    if (this.index !== undefined) await list.updateTask(this.index, task);
     else await list.appendTask(task);
 
     window.todoListWindow.render(true);
@@ -202,7 +255,7 @@ function setupTodoListWindow(html) {
  * - always
  */
 export function showReminder() {
-  const list = TodoList.load();
+  const list = TodoList.load(game.user);
   const level = game.settings.get("fvtt-keikaku", "showReminder");
 
   if (level == "never" || (level == "incomplete" && !list.incomplete)) return;

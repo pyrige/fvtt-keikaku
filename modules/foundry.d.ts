@@ -147,6 +147,15 @@ declare class User {
   /** The source data for the User entity, usually retrieved from the database. **/
   data: object;
 
+  /** A convenience accessor for the _id attribute of the Entity data object. **/
+  id: string;
+
+  /** A convenience accessor for the name attribute of the Entity data object. **/
+  name: string;
+
+  /** A flag for whether the current User has Assistant GameMaster or full GameMaster role. **/
+  isGM: boolean;
+
   /**
    * Get the value of a "flag" for this User
    * See the setFlag method for more details on flags
@@ -198,8 +207,34 @@ declare class ClientSettings {
   get(module: string, key: string): any;
 }
 
+/**
+ * A reusable storage concept which blends the functionality of an Array with the efficient key-based lookup of a Map.
+ * This concept is reused throughout Foundry VTT where a collection of uniquely identified elements is required.
+ * @extends {Map}
+ * @type {Map}
+ */
+declare class Collection<T> {
+  /**
+   * Get an element from the Collection by its key.
+   * @param key    The key of the entry to retrieve
+   * @param strict Throw an Error if the requested id does not exist, otherwise return null. Default false
+   *
+   * @return The retrieved entry value, if the key exists, otherwise undefined
+   */
+  get(key: string, strict?: boolean): T | undefined;
+
+  /**
+   * Transform each element of the Collection into a new form, returning an Array of transformed values
+   * @param transformer The transformation function to apply to each entry value
+   *
+   * @return An Array of transformed values
+   */
+  map<U>(transformer: (entry: T) => U): Array<U>;
+}
+
 declare class Game {
   user: User;
+  users: Collection<User>;
   settings: ClientSettings;
   i18n: Localization;
 }

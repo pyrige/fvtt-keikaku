@@ -1,0 +1,7 @@
+{{#if active}}
+<a class="todo-control" title="{{localize title}}" data-index="{{ index }}" data-action="{{ action }}">
+  <i class="{{ icon }}"></i>
+</a>
+{{else}}
+<span class="todo-control"><i class="{{ icon }}"></i></span>
+{{/if}}

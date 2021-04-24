@@ -1,15 +1,13 @@
 <li>
   <div class="flexrow">
     {{#if done}}
-    <a title="{{ localize 'keikaku.todolistwindow.incompletetask' }}" class="todo-control" data-index="{{ @index }}"
-      data-action="todo-toggle">
-      <i class="far fa-lg fa-check-square"></i>
-    </a>
+    {{> modules/fvtt-keikaku/templates/todo-list-control.hbs
+    index=@index action="toggle" icon="far fa-lg fa-check-square"
+    title="keikaku.todolistwindow.incompletetask" active=isOwner}}
     {{else}}
-    <a title="{{ localize 'keikaku.todolistwindow.completetask' }}" class="todo-control" data-index="{{ @index }}"
-      data-action="todo-toggle">
-      <i class="far fa-lg fa-square"></i>
-    </a>
+    {{> modules/fvtt-keikaku/templates/todo-list-control.hbs
+    index=@index action="toggle" icon="far fa-lg fa-square"
+    title="keikaku.todolistwindow.completetask" active=isOwner}}
     {{/if}}
 
     <p class="todo-description {{#if done}}todo-done{{/if}}" {{#if color}}style="color: {{ color }}" {{/if}}>
@@ -22,20 +20,20 @@
     <span class="tag">
       {{ localize "keikaku.todolistwindow.tags.important" }}
     </span>
-    {{/if}}
-    {{#if (eq tag 2)}}
+    {{else if (eq tag 2)}}
     <span class="tag">
       {{ localize "keikaku.todolistwindow.tags.optional" }}
     </span>
     {{/if}}
 
-    <a title="{{ localize 'keikaku.todolistwindow.edittask' }}" class="todo-control" data-index="{{ @index }}"
-      data-action="todo-edit">
-      <i class="fas fa-edit"></i>
-    </a>
-    <a title="{{ localize 'keikaku.todolistwindow.deletetask' }}" class="todo-control" data-index="{{ @index }}"
-      data-action="todo-delete">
-      <i class="fas fa-trash-alt"></i>
-    </a>
+    {{#if isOwner}}
+    {{> modules/fvtt-keikaku/templates/todo-list-control.hbs
+    index=@index action="edit" icon="fas fa-edit"
+    title="keikaku.todolistwindow.edittask" active=isOwner}}
+
+    {{> modules/fvtt-keikaku/templates/todo-list-control.hbs
+    index=@index action="delete" icon="fas fa-trash-alt"
+    title="keikaku.todolistwindow.deletetask" active=isOwner}}
+    {{/if}}
   </div>
 </li>

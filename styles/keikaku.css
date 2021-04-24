@@ -1,12 +1,10 @@
-#keikaku-todo-list > li:not(:last-child):after {
+#keikaku-todo-list ol#tasks li:not(:last-child):after {
   content: "";
   display: block;
   height: 1px;
-  width: 95%;
-  margin: 5px;
-  border: none;
-  border-top: 1px solid #b5b3a4;
-  border-bottom: 1px solid #f0f0e0;
+  width: 100%;
+  margin: 2px auto;
+  border-bottom: 2px groove;
 }
 
 #keikaku-todo-list .flexrow {
@@ -37,4 +35,12 @@
   border-radius: 3px;
   border-style: solid;
   border-width: 1px;
+}
+
+#keikaku-todo-list div#player-selection {
+  text-align: right;
+}
+
+#keikaku-todo-item-form label {
+  white-space: nowrap;
 }

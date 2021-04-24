@@ -17,6 +17,7 @@
   "keikaku.taskform.title": "Edit Task",
   "keikaku.taskform.field.color": "Color",
   "keikaku.taskform.field.done": "Completed",
+  "keikaku.taskform.field.secret": "Keep secret from GM",
   "keikaku.taskform.field.tag": "Tag",
   "keikaku.taskform.field.tags.none": "None",
   "keikaku.taskform.field.tags.important": "Important",
@@ -32,7 +33,9 @@
   "keikaku.todolistwindow.edittask": "Edit Task",
   "keikaku.todolistwindow.incompletetask": "Mark Incomplete",
   "keikaku.todolistwindow.newtask": "New Task",
-  "keikaku.todolistwindow.placeholder": "There's nothing for you to do at the moment. Add a task to get started.",
+  "keikaku.todolistwindow.placeholder.owner": "There's nothing for you to do at the moment. Add a task to get started.",
+  "keikaku.todolistwindow.placeholder.other": "The selected player has not added any tasks.",
+  "keikaku.todolistwindow.playerselection": "Player Selection",
   "keikaku.todolistwindow.tags.important": "important",
   "keikaku.todolistwindow.tags.optional": "optional"
 }
