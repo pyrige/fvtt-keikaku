@@ -1,10 +1,5 @@
-#keikaku-todo-list ol#tasks li:not(:last-child):after {
-  content: "";
-  display: block;
-  height: 1px;
-  width: 100%;
-  margin: 2px auto;
-  border-bottom: 2px groove;
+#keikaku-todo-list ol#tasks li:last-child hr {
+  display: none;
 }
 
 #keikaku-todo-list .flexrow {
