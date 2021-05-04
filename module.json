@@ -22,6 +22,10 @@
   "download": "https://github.com/pyrige/fvtt-keikaku/releases/latest/download/module.zip",
   "media": [
     {
+      "type": "cover",
+      "url": "https://raw.githubusercontent.com/pyrige/fvtt-keikaku/main/logo.png"
+    },
+    {
       "type": "screenshot",
       "url": "https://raw.githubusercontent.com/pyrige/fvtt-keikaku/main/screenshot.png"
     }

@@ -1,4 +1,4 @@
-# Keikaku - To-Do List Manager
+![Keikaku To-Do List Manager Logo](https://raw.githubusercontent.com/pyrige/fvtt-keikaku/main/logo.png)
 
 <p align="center">
   <a href="https://github.com/pyrige/fvtt-keikaku/releases">
