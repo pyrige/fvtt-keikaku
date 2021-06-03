@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.2.1 (2021-XX-YY)
+## 0.2.1 (2021-06-03)
+
+### Compatibility
+
+- The module is fully compatible with the 0.8.6 stable release.
 
 ### Minor Changes
 
