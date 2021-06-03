@@ -33,7 +33,7 @@
 
   "library": false,
   "minimumCoreVersion": "0.5.0",
-  "compatibleCoreVersion": "0.8.1",
+  "compatibleCoreVersion": "0.8.6",
 
   "esmodules": ["modules/keikaku.js"],
   "styles": ["styles/keikaku.css"],
