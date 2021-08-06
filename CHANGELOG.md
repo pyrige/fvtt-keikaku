@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.2 (2021-08-06)
+
+### Fixes
+
+- [#7](https://github.com/pyrige/fvtt-keikaku/issues/7)
+  Fixes a conflict with styles introduced by the PF1e system.
+
+### Compatibility
+
+- The module is fully compatible with the 0.8.8 stable release.
+  Initial testing shows it also works just fine on the V9 prototype.
+
 ## 0.2.1 (2021-06-03)
 
 ### Compatibility
