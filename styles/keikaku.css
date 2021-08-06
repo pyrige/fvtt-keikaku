@@ -38,4 +38,5 @@
 
 #keikaku-todo-item-form label {
   white-space: nowrap;
+  flex: 0;
 }
