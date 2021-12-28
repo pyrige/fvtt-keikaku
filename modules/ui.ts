@@ -1,12 +1,11 @@
-/* global jQuery, Handlebars, Sortable */
-/* global game, loadTemplates, mergeObject, Application, FormApplication, Dialog */
+import * as todo from "./todo";
+import * as colors from "./colors";
 
-import { Task, TodoList } from "./todo.js";
-import { RGBColor } from "./colors.js";
+import Sortable from "sortablejs/modular/sortable.core.esm.js";
 
 /**
  * Parse handlebar templates included with keikaku.
- * @returns {Promise<Array<Function>>} an array of functions used for rendering the templates
+ * @returns an array of functions used for rendering the templates
  */
 async function preloadTemplates() {
   const templates = [
@@ -24,6 +23,9 @@ async function preloadTemplates() {
 }
 
 export class TodoListWindow extends Application {
+  private selectedPlayer: { id: string; isOwner: boolean };
+  private players?: Array<{ id: string; name: string | null }>;
+
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       id: "keikaku-todo-list",
@@ -40,31 +42,38 @@ export class TodoListWindow extends Application {
    * Determine the active user and if they are a GM, populate players array.
    **/
   constructor() {
+    if (!game.user || !game.users)
+      throw new Error("Users have not yet been initialized");
+
     super();
 
     this.selectedPlayer = {
-      id: game.user.id,
+      id: game.user?.id,
       isOwner: true,
     };
 
     // only for a GM do we bother to populate the players list
-    this.players = game.user.isGM
-      ? game.users.map((u) => {
-          return { name: u.name, id: u.id };
-        })
-      : null;
+    if (game.user.isGM) {
+      this.players = game.users.map((user) => ({
+        id: user.id,
+        name: user.name,
+      }));
+    }
   }
 
   /**
    * Set up interactivity for the window.
    *
-   * @param {JQuery} html is the rendered HTML provided by jQuery
+   * @param html is the rendered HTML provided by jQuery
    **/
-  activateListeners(html) {
+  activateListeners(html: JQuery) {
     super.activateListeners(html);
 
     html.on("change", "select#player-selector", async (evt) => {
-      const id = jQuery(evt.currentTarget).val().toString();
+      if (!game.user) throw new Error("Users have not yet been initialized");
+
+      // we use User.id as value, so we can safely assume we get a string here
+      const id = jQuery(evt.currentTarget).val() as string;
 
       this.selectedPlayer = {
         id: id,
@@ -82,7 +91,7 @@ export class TodoListWindow extends Application {
       // this lets use work with tasks that don't have a color
       const desc = tag.siblings("p.todo-description");
       const color = desc.css("color");
-      const parsed = RGBColor.parse(color);
+      const parsed = colors.RGBColor.parse(color);
       const contrast = parsed.contrastColor();
 
       tag.css("background-color", parsed.toCSS());
@@ -104,7 +113,9 @@ export class TodoListWindow extends Application {
 
       // the list can only belong to the current user
       const owner = game.user;
-      const list = TodoList.load(owner);
+      if (!owner) return;
+
+      const list = todo.TodoList.load(owner);
 
       switch (action) {
         case "toggle":
@@ -127,16 +138,20 @@ export class TodoListWindow extends Application {
 
     html.on("click", "button#todo-new", async () => {
       const owner = game.user;
+      if (!owner) return;
+
       new TaskForm(owner).render(true);
     });
 
-    html.find("ol#tasks").each((index, element) => {
+    html.find("ol#tasks").each((_index, element) => {
       Sortable.create(element, {
         onEnd: async (evt) => {
           if (evt.oldIndex == evt.newIndex) return;
 
           const owner = game.user;
-          const list = TodoList.load(owner);
+          if (!owner) return;
+
+          const list = todo.TodoList.load(owner);
           await list.moveTask(evt.oldIndex, evt.newIndex);
           this.render(true);
         },
@@ -146,8 +161,10 @@ export class TodoListWindow extends Application {
 
   /** @override */
   getData() {
-    const owner = game.users.get(this.selectedPlayer.id);
-    const list = TodoList.load(owner);
+    const owner = game.users?.get(this.selectedPlayer.id);
+    if (!owner) return {};
+
+    const list = todo.TodoList.load(owner);
     const tasks = this.selectedPlayer.isOwner
       ? list.tasks
       : list.tasks.filter((task) => !task.secret);
@@ -173,24 +190,24 @@ class TaskForm extends FormApplication {
   }
 
   /**
-   * @param {User} owner is the task's owner.
-   * @param {Task?} task is the (optional) task to edit
-   * @param {number?} index is the (optional) index in the to-do list
+   * @param owner is the task's owner.
+   * @param task is the (optional) task to edit
+   * @param index is the (optional) index in the to-do list
    **/
-  constructor(owner, task = undefined, index = undefined) {
-    super();
-
-    this.owner = owner;
-    this.task = task ?? new Task();
-    this.index = index;
+  constructor(owner: User, task?: todo.Task, index?: number) {
+    super({
+      owner: owner,
+      task: task ?? new todo.Task(),
+      index: index,
+    });
   }
 
   /**
    * Set up interactivity for the form.
    *
-   * @param {JQuery} html is the rendered HTML provided by jQuery
+   * @param html is the rendered HTML provided by jQuery
    **/
-  activateListeners(html) {
+  activateListeners(html: JQuery) {
     super.activateListeners(html);
 
     // just to avoid confusion, we disable the color input based on the checkbox
@@ -200,49 +217,59 @@ class TaskForm extends FormApplication {
     });
   }
 
-  /** @override */
-  getData() {
-    return {
-      task: this.task,
-      index: this.index,
-    };
-  }
+  /** Helper class for representing this form's data **/
+  static TaskData = class {
+    readonly description: string;
+    readonly done: boolean;
+    readonly tag: todo.TaskTag;
+    readonly secret: boolean;
+    readonly useColor: boolean;
+    readonly color?: string;
+  };
 
-  /** @override */
-  async _updateObject(_event, data) {
-    const color = data.useColor ? data.color : null;
-    const task = new Task(
-      data.description,
-      data.done,
-      data.tag,
-      data.secret,
+  /** @override **/
+  async _updateObject(
+    _event: Event,
+    formData: InstanceType<typeof TaskForm.TaskData>
+  ) {
+    const color = formData.useColor ? formData.color : null;
+    const task = new todo.Task(
+      formData.description,
+      formData.done,
+      formData.tag,
+      formData.secret,
       color
     );
 
-    const list = TodoList.load(this.owner);
-    if (this.index !== undefined) await list.updateTask(this.index, task);
+    const owner = this.object["owner"] as User;
+    const index = this.object["index"] as number | undefined;
+
+    const list = todo.TodoList.load(owner);
+
+    if (index !== undefined) await list.updateTask(index, task);
     else await list.appendTask(task);
 
-    window.todoListWindow.render(true);
+    globalThis.todoListWindow.render(true);
   }
 }
 
 /**
  * Setup the to-do list window. Adds a button to the journal directory.
  *
- * @param {JQuery} html is the rendered HTML provided by jQuery
+ * @param html is the rendered HTML provided by jQuery
  **/
-function setupTodoListWindow(html) {
-  window.todoListWindow = new TodoListWindow();
+function setupTodoListWindow(html: JQuery) {
+  globalThis.todoListWindow = new TodoListWindow();
 
   const todoListButton = jQuery(
     `<div class="action-buttons flexrow">
-       <button><i class="fas fa-tasks"></i>${game.i18n.localize(
-         "keikaku.journalbutton"
-       )}</button>
+       <button>
+         <i class="fas fa-tasks"></i>
+         ${game.i18n.localize("keikaku.journalbutton")}
+       </button>
      </div>`
   );
-  todoListButton.on("click", () => window.todoListWindow.render(true));
+  todoListButton.on("click", () => globalThis.todoListWindow.render(true));
 
   html.find(".directory-footer").append(todoListButton);
 }
@@ -255,8 +282,10 @@ function setupTodoListWindow(html) {
  * - always
  */
 export function showReminder() {
-  const list = TodoList.load(game.user);
+  if (!game.user) throw new Error("Users have not yet been initialized");
+
   const level = game.settings.get("fvtt-keikaku", "showReminder");
+  const list = todo.TodoList.load(game.user);
 
   if (level == "never" || (level == "incomplete" && !list.incomplete)) return;
 
@@ -273,9 +302,10 @@ export function showReminder() {
       todo: {
         icon: '<i class="fas fa-tasks"></i>',
         label: game.i18n.localize("keikaku.reminder.button"),
-        callback: () => window.todoListWindow.render(true),
+        callback: () => globalThis.todoListWindow.render(true),
       },
     },
+    default: "todo",
   });
 
   reminder.render(true);
@@ -286,9 +316,9 @@ export function showReminder() {
  * - preloads relevant templates
  * - adds trigger button to journal
  *
- * @param {JQuery} html is the rendered HTML provided by jQuery
+ * @param html is the rendered HTML provided by jQuery
  **/
-export async function initUiComponents(html) {
+export async function initUiComponents(html: JQuery) {
   await preloadTemplates();
 
   setupTodoListWindow(html);

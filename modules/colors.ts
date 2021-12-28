@@ -1,20 +1,27 @@
 /** Color handling utilities **/
 
 export class RGBColor {
+  /** The color's red component [0; 255] */
+  readonly red: number;
+  /** The color's green component [0; 255] */
+  readonly green: number;
+  /** The color's blue component [0; 255] */
+  readonly blue: number;
+
   /**
    * Create a new RGB color struct from its components.
    * Use `parse()` for creating one from a string instead.
    *
-   * @param {number} red is the color's red component [0; 255]
-   * @param {number} green is the color's green component [0; 255]
-   * @param {number} blue is the color's blue component [0; 255]
+   * @param red is the color's red component [0; 255]
+   * @param green is the color's green component [0; 255]
+   * @param blue is the color's blue component [0; 255]
    **/
-  constructor(red, green, blue) {
+  constructor(red: number, green: number, blue: number) {
     /**
      * Make sure an RGB component is within range
-     * @param {number} value
+     * @param value is the RGB component to validate
      **/
-    const checkRange = (value) => {
+    const checkRange = (value: number) => {
       if (value < 0 || value > 255)
         throw new RangeError("RGB value is not within range [0; 255]");
     };
@@ -30,13 +37,13 @@ export class RGBColor {
    * Compute the relative luminance of this color.
    * @returns {number} the relative luminance between 0 (black) and 1 (white)
    **/
-  relativeLuminance() {
+  relativeLuminance(): number {
     /**
      * Convert sRGB components to their gamma-expanded values.
-     * @param {number} value
-     * @returns {number} the gamma-expanded value
+     * @param value is the sRGB component to gamma-expand
+     * @returns the gamma-expanded value
      **/
-    const gammaExpanded = (value) => {
+    const gammaExpanded = (value: number): number => {
       const sRGB = value / 255;
 
       return sRGB <= 0.03928
@@ -54,10 +61,10 @@ export class RGBColor {
   /**
    * Compute the contrast ratio between this and another color.
    *
-   * @param {RGBColor} other is another color
-   * @returns {number} the contrast ratio
+   * @param olor} other is another color
+   * @returns the contrast ratio between this and the other color
    */
-  contrastRatio(other) {
+  contrastRatio(other: RGBColor): number {
     const L1 = Math.max(this.relativeLuminance(), other.relativeLuminance());
     const L2 = Math.min(this.relativeLuminance(), other.relativeLuminance());
 
@@ -65,9 +72,9 @@ export class RGBColor {
   }
 
   /** Compute the best contrast color assuming the current as background.
-   * @returns {RGBColor} a color with high contrast
+   * @returns a color with a reasonably high contrast
    **/
-  contrastColor() {
+  contrastColor(): RGBColor {
     const whiteContrast = this.contrastRatio(OFF_WHITE);
     const blackContrast = this.contrastRatio(OFF_BLACK);
 
@@ -78,7 +85,7 @@ export class RGBColor {
    * Format this color for usage in CSS.
    * @returns {string} a CSS color string
    **/
-  toCSS() {
+  toCSS(): string {
     return `rgb(${this.red}, ${this.green}, ${this.blue})`;
   }
 
@@ -86,19 +93,21 @@ export class RGBColor {
    * Parse a CSS color string to RGBColor.
    * Only hexadecimal and RGB colors are supported.
    *
-   * @param {string} color is the color string to parse
-   * @returns {RGBColor} the parsed color
+   * @param color is the color string to parse
+   * @returns the parsed color
    */
-  static parse(color) {
+  static parse(color: string): RGBColor {
     // first, remove all whitespace to make the RGB pattern simpler
     color = color.replace(/\s+/g, "");
 
-    const hexPattern = /^#(?<red>[0-9a-f]{2})(?<green>[0-9a-f]{2})(?<blue>[0-9a-f]{2})$/i;
+    const hexPattern =
+      /^#(?<red>[0-9a-f]{2})(?<green>[0-9a-f]{2})(?<blue>[0-9a-f]{2})$/i;
     const rgbPattern = /^rgb\((?<red>\d+),(?<green>\d+),(?<blue>\d+)\)$/i;
 
     const match = color.match(hexPattern) || color.match(rgbPattern);
 
-    if (!match) throw new SyntaxError(`Cannot parse color string "${color}"`);
+    if (!match || !match.groups)
+      throw new SyntaxError(`Cannot parse color string "${color}"`);
 
     const components = [
       match["groups"]["red"],

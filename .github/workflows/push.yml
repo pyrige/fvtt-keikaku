@@ -1,0 +1,36 @@
+name: Verification of regular commits
+
+on: push
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+          cache: "yarn"
+      - name: Run verification
+        run: |
+          yarn install
+          yarn run tsc
+          yarn run lint
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+          cache: "yarn"
+      - name: Bundle module
+        run: |
+          yarn install
+          yarn run build
+      - name: Upload foundry module
+        uses: actions/upload-artifact@v2
+        with:
+          name: module
+          path: dist/
+          retention-days: 1

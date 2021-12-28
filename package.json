@@ -1,21 +1,31 @@
 {
   "name": "fvtt-keikaku",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Simple to-do list module for Foundry VTT",
   "repository": "https://github.com/pyrige/fvtt-keikaku",
   "author": "Kevin Perry",
   "license": "MIT",
   "private": true,
   "scripts": {
+    "build": "node build.js",
+    "clean": "rimraf dist/",
     "lint": "eslint modules/",
     "tsc": "tsc"
   },
   "devDependencies": {
-    "@types/jquery": "^3.5.5",
-    "eslint": "^7.25.0",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-promise": "^5.1.0",
-    "typescript": "^4.2.4"
+    "@league-of-foundry-developers/foundry-vtt-types": "^9",
+    "@types/jquery": "^3",
+    "@types/sortablejs": "^1.10.7",
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
+    "esbuild": "^0.14.8",
+    "eslint": "^8.5.0",
+    "glob": "^7.2.0",
+    "handlebars": "^4.7.7",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "sortablejs": "^1.14.0"
   }
 }

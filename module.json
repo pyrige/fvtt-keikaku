@@ -3,7 +3,7 @@
   "name": "fvtt-keikaku",
   "title": "Keikaku - To-Do List",
   "description": "Simple to-do list module for Foundry VTT. Every user may manage their own to-do list, add arbitrary tasks, and mark them as completed.",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "changelog": "https://github.com/pyrige/fvtt-keikaku/blob/main/CHANGELOG.md",
 
   "author": "Kevin Perry",
@@ -47,10 +47,6 @@
 
   "includes": [
     "modules/keikaku.js",
-    "modules/colors.js",
-    "modules/logger.js",
-    "modules/todo.js",
-    "modules/ui.js",
 
     "i18n/en.json",
 
@@ -60,12 +56,5 @@
     "templates/todo-list-control.hbs",
     "templates/todo-list-item.hbs",
     "templates/todo-list.hbs"
-  ],
-
-  "dependencies": [
-    {
-      "name": "_sortablejs",
-      "type": "module"
-    }
   ]
 }

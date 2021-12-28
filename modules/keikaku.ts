@@ -1,9 +1,7 @@
-/* global game, Hooks */
+import * as logger from "./logger";
+import * as ui from "./ui";
 
-import * as logger from "./logger.js";
-import { initUiComponents, showReminder } from "./ui.js";
-
-/** Register Keikaku settings */
+/** Register Keikaku settings **/
 function registerSettings() {
   game.settings.register("fvtt-keikaku", "showReminder", {
     name: game.i18n.localize("keikaku.settings.reminder.name"),
@@ -41,10 +39,17 @@ Hooks.once("ready", async () => {
   logger.info(banner);
 });
 
-Hooks.on("renderJournalDirectory", async (_app, html, _data) => {
-  await initUiComponents(html);
-});
+Hooks.on(
+  "renderJournalDirectory",
+  async (_app: Application, html: JQuery, _data: object) => {
+    await ui.initUiComponents(html);
+  }
+);
 
-Hooks.once("renderJournalDirectory", async (_app, _html, _data) => {
-  showReminder();
-});
+// we show a reminder once if it is enabled in the settings
+Hooks.once(
+  "renderJournalDirectory",
+  async (_app: Application, _html: JQuery, _data: object) => {
+    ui.showReminder();
+  }
+);

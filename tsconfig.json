@@ -1,9 +1,26 @@
 {
   "compilerOptions": {
     "noEmit": true,
-    "allowJs": true,
-    "checkJs": true,
-    "lib": ["DOM", "ES6"],
-    "target": "ES6"
-  }
+    "allowJs": false,
+    "checkJs": false,
+    "strictNullChecks": true,
+    "types": [
+      "jquery",
+      "handlebars",
+      "sortablejs",
+      "@league-of-foundry-developers/foundry-vtt-types"
+    ],
+    "moduleResolution": "node",
+    "lib": [
+      "DOM",
+      "ES2021"
+    ],
+    "target": "ES2021"
+  },
+  "include": [
+    "modules"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
