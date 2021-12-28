@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0 (2021-12-28)
+
+### Compatibility
+
+- Bump compatible core version to V9.
+
 ## 0.2.2 (2021-08-06)
 
 ### Fixes
