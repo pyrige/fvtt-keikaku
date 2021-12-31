@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.1 (2021-12-31)
+
+### Build Infrastructure
+
+- The module is now written in TypeScript and bundles SortableJS directly.
+  This removes the need for the `_sortablejs` module and reduces the number of files loaded by Foundry.
+
 ## 0.3.0 (2021-12-28)
 
 ### Compatibility
