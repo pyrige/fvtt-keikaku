@@ -1,8 +1,10 @@
 const esbuild = require("esbuild");
 const fs = require("fs");
 const path = require("path");
+const process = require("process");
 
 const outdir = "dist/";
+const production = process.env["NODE_ENV"] === "production";
 
 esbuild
   .build({
@@ -10,8 +12,8 @@ esbuild
     bundle: true,
     format: "esm",
     platform: "browser",
-    sourcemap: true,
-    minify: true,
+    sourcemap: !production,
+    minify: production,
     outbase: "./",
     outdir: outdir,
   })

@@ -28,7 +28,7 @@ jobs:
       # install dependencies and build module
       - run: |
           yarn install
-          yarn run build
+          yarn run --production build
 
       # Create a zip file with all files required by the module to add to the release
       - run: |
