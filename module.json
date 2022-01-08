@@ -42,6 +42,11 @@
       "lang": "en",
       "name": "English",
       "path": "i18n/en.json"
+    },
+    {
+      "lang": "ja",
+      "name": "日本語",
+      "path": "i18n/ja.json"
     }
   ],
 
@@ -49,6 +54,7 @@
     "modules/keikaku.js",
 
     "i18n/en.json",
+    "i18n/ja.json",
 
     "styles/keikaku.css",
 
