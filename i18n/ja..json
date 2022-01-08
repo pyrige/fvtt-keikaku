@@ -1,0 +1,41 @@
+{
+  "keikaku.initializing": "計画リストの初期化",
+  "keikaku.journalbutton": "計画リスト",
+
+  "keikaku.reminder.title": "計画リスト通知",
+  "keikaku.reminder.complete": "すべての計画が完了しました。新しく計画を追加しますか？",
+  "keikaku.reminder.incomplete": "計画リストに未完了の計画があります。",
+  "keikaku.reminder.hint": "このダイアログの表示タイミングは設定で変更できます。",
+  "keikaku.reminder.button": "計画リストを開く",
+
+  "keikaku.settings.reminder.name": "プレイヤー通知",
+  "keikaku.settings.reminder.hint": "読込時に計画リストをPLに通知させます。",
+  "keikaku.settings.reminder.choice.never": "表示しない",
+  "keikaku.settings.reminder.choice.incomplete": "未完了計画のみ",
+  "keikaku.settings.reminder.choice.always": "常に",
+
+  "keikaku.taskform.title": "計画編集",
+  "keikaku.taskform.field.color": "色",
+  "keikaku.taskform.field.done": "完了",
+  "keikaku.taskform.field.secret": "GMに見せない",
+  "keikaku.taskform.field.tag": "タグ",
+  "keikaku.taskform.field.tags.none": "なし",
+  "keikaku.taskform.field.tags.important": "重要",
+  "keikaku.taskform.field.tags.optional": "任意",
+  "keikaku.taskform.field.description": "概要",
+  "keikaku.taskform.customization": "カスタマイズ",
+  "keikaku.taskform.createtask": "計画作成",
+  "keikaku.taskform.updatetask": "計画更新",
+
+  "keikaku.todolistwindow.title": "計画リスト",
+  "keikaku.todolistwindow.completetask": "完了チェック",
+  "keikaku.todolistwindow.deletetask": "計画削除",
+  "keikaku.todolistwindow.edittask": "計画編集",
+  "keikaku.todolistwindow.incompletetask": "未完了チェック",
+  "keikaku.todolistwindow.newtask": "新規計画",
+  "keikaku.todolistwindow.placeholder.owner": "現在計画が何も無いですが、新たな計画を追加しますか？",
+  "keikaku.todolistwindow.placeholder.other": "選択されたプレイヤーは計画を追加していません。",
+  "keikaku.todolistwindow.playerselection": "PL選択",
+  "keikaku.todolistwindow.tags.important": "重要",
+  "keikaku.todolistwindow.tags.optional": "任意"
+}
